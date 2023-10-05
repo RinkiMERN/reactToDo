@@ -23,15 +23,17 @@ const Form = () => {
             alert('add a task')
         }
         else {
-            let newListItems = [...listItem, { id: nextId++, task: task }]
-
+            ++nextId
+            let newListItems = [...listItem, { id: nextId, task: task }]
+                console.log(newListItems);
             setTask("")
             setListItem(newListItems)
 
         }
+        
     }
-    function deleteItem(task) {
-        let updatedList = listItem.filter((item) => { return item.task !== task });
+    function deleteItem(index) {
+        let updatedList = listItem.filter((item, i) => { return i !== index });
 
         setListItem(updatedList);
     }
@@ -52,10 +54,10 @@ const Form = () => {
                             width: '100%', maxWidth: 660,
                             bgcolor: 'background.paper'
                         }} className='shadow-sm mt-3'>
-                        {listItem.map((items) => {
+                        {listItem.map((items,i) => {
                             console.log(items.unique_id);
                             return (
-                                <ListItem key={items.id} onClick={() => deleteItem(items.task)} className='d-flex justify-content-between align-items-center'>
+                                <ListItem index={i} key={items.id} onClick={() => deleteItem(i)} className='d-flex justify-content-between align-items-center'>
                                     <ListItemText primary={items.task} style={{flexBasis: '75%'}}/>
                                     <ListItemButton className=' d-flex justify-content-end' style={{flexBasis: '25%'}} >
                                         <div role="img" aria-label="remove" className='d-block'>
